@@ -1,0 +1,52 @@
+python -m unittest -v sampleclass.py
+
+
+The unittest module can be used from the command line to run tests from modules, classes or even individual test methods:
+
+python -m unittest test_module1 test_module2
+python -m unittest test_module.TestClass
+python -m unittest test_module.TestClass.test_method
+You can pass in a list with any combination of module names, and fully qualified class or method names.
+
+You can run tests with more detail (higher verbosity) by passing in the -v flag:
+
+python -m unittest -v test_module
+For a list of all the command-line options:
+
+python -m unittest -h
+
+https://docs.python.org/2/library/unittest.html
+
+
+Luckily, we can factor out such set-up code by implementing a method called setUp(), which the testing framework will automatically call for us when we run the test:
+
+import unittest
+
+class SimpleWidgetTestCase(unittest.TestCase):
+    def setUp(self):
+        self.widget = Widget('The widget')
+
+class DefaultWidgetSizeTestCase(SimpleWidgetTestCase):
+    def runTest(self):
+        self.assertEqual(self.widget.size(), (50,50),
+                         'incorrect default size')
+
+class WidgetResizeTestCase(SimpleWidgetTestCase):
+    def runTest(self):
+        self.widget.resize(100,150)
+        self.assertEqual(self.widget.size(), (100,150),
+                         'wrong size after resize')
+If the setUp() method raises an exception while the test is running, the framework will consider the test to have suffered an error, and the runTest() method will not be executed.
+
+Similarly, we can provide a tearDown() method that tidies up after the runTest() method has been run:
+
+import unittest
+
+class SimpleWidgetTestCase(unittest.TestCase):
+    def setUp(self):
+        self.widget = Widget('The widget')
+
+    def tearDown(self):
+        self.widget.dispose()
+        self.widget = None
+If setUp() succeeded, the tearDown() method will be run whether runTest() succeeded or not.

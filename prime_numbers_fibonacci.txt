@@ -1,0 +1,57 @@
+Prime numbers:
+I'm sure you want to see a more complicated example. :-) The following is yet another way to compute prime numbers. The interesting thing is that we first build a list of non-prime numbers, using a single list comprehension, then use another list comprehension to get the "inverse" of the list, which are prime numbers.
+
+>>> noprimes = [j for i in range(2, 8) for j in range(i*2, 50, i)]
+>>> primes = [x for x in range(2, 50) if x not in noprimes]
+>>> print primes
+[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+***********************************************************************
+Fibonacci series
+python program:
+
+def hello():
+	first = 0
+	second = 1
+
+	list_size = int(input("Enter the number"))
+	if list_size == 0:
+		mylist =[]
+		return mylist
+	elif list_size == 1:
+		mylist = [first]
+		return mylist
+	elif list_size == 2:
+		mylist = [first,second]
+		return mylist
+
+	mylist = [first, second]
+	i = len(mylist)
+	while i<=list_size:
+		new = first + second 
+        mylist.append(new)
+        first = second
+        second = new
+        i+=1
+	return mylist
+    
+if __name__ == "__main__":
+	hello()
+
+***********************************
+Highest and lowest number in the array
+array = input(("Enter the array\n"))
+print "Entered array is %s\n" %array
+
+low = array[0]
+high = array[0]
+
+for number in array:
+    if number>high:
+        high = number
+    if number<low:
+        low = number
+    
+print "highest number in the array is %s" %high
+print "lowest number in the array is %s" %low
+******************************************
+
